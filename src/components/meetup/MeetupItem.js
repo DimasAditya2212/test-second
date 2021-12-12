@@ -1,0 +1,27 @@
+import Card from '../ui/Card';
+import classes from './MeetupItem.module.css';
+
+function MeetupItem(props) {
+    return ( 
+    <div>
+    <h1 className={classes.h1}>{props.cardTitle}</h1>
+    <li className={classes.item}>
+        <Card>
+        <div className={classes.image}>
+            <img src={props.image} alt={props.title} />
+        </div>
+        <div className={classes.content}>
+            <h3>{props.title}</h3>
+            <address>{props.address} </address>
+            <p>{props.description}</p>
+        </div>
+        <div className={classes.actions}>
+            <button className={classes.button}>To Favorites</button>
+        </div>
+        </Card>
+    </li>
+    </div>
+    )
+}
+
+export default MeetupItem;
