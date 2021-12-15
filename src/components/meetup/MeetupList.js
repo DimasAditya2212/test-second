@@ -12,7 +12,6 @@ function MeetupList(props) {
         address={meetup.address} 
         description={meetup.description}
         cardTitle={meetup.cardTitle}
-        
         />
         ))}
     </ul>

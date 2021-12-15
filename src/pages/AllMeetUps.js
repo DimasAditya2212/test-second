@@ -1,31 +1,41 @@
 import MeetupList from '../components/meetup/MeetupList';
+import { useState, useEffect} from 'react'
 
-const DUMMY_DATA = [
-    {
-        id: 'm1',
-        title: 'This is a first meetup',
-        image:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/2560px-Stadtbild_M%C3%BCnchen.jpg',
-        address: 'Meetupstreet 5, 12345 Meetup City',
-        description:
-          'This is a first, amazing meetup which you definitely should not miss. It will be a lot of fun!',
-        cardTitle: 'Munich',
-      },
-      {
-        id: 'm2',
-        title: 'This is a second meetup',
-        image:
-          'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Stadtbild_M%C3%BCnchen.jpg/2560px-Stadtbild_M%C3%BCnchen.jpg',
-        address: 'Meetupstreet 5, 12345 Meetup City',
-        description:
-          'This is a first, amazing meetup which you definitely should not miss. It will be a lot of fun!',
-        cardTitle: 'Leverkusen',
-      },
-];
 
 function AllMeetUpsPage() {
+const [isLoading, setIsLoading] = useState(true)
+const [loadedMeetup, setLoadedMeetup] = useState([])
+
+useEffect(() => {
+  fetch('https://react-started-3997e-default-rtdb.asia-southeast1.firebasedatabase.app/meetups.json')
+    .then(response => {
+      response.json();
+    }).then(data => {
+      const meetup = []
+      for (const key in data){
+        const newMeetup = {
+          id: key,
+          ...data[key]
+        }
+
+        meetup.push(newMeetup)
+      }
+
+      setIsLoading(false)
+      setLoadedMeetup(meetup)
+    }).catch(() => console.log('error'))
+}, [])
+
+    
+
+    if(isLoading){
+      return <section>
+        <p>Loading..</p>
+      </section>
+    }
+
     return <section>
-        <MeetupList meetups={DUMMY_DATA} />
+        <MeetupList meetups={loadedMeetup} />
     </section>
 }
 
